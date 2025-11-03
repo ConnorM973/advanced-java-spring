@@ -13,9 +13,15 @@ public class Nomad {
 
     private Integer age;
 
-    public Nomad(@Value("${nomad.name}") String name, @Value("${nomad.age}") Integer age) {
+    private double height;
+
+    private String favColor;
+
+    public Nomad(@Value("${nomad.name}") String name, @Value("${nomad.age}") Integer age, @Value("${nomad.height}") Double height, @Value("${nomad.favColor}") String favColor) {
         this.name = name;
         this.age = age;
+        this.height=height;
+        this.favColor=favColor;
     }
 
     @Value("Hello!!")

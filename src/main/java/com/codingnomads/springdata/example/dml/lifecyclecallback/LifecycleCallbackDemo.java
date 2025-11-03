@@ -1,6 +1,7 @@
 /* CodingNomads (C)2024 */
 package com.codingnomads.springdata.example.dml.lifecyclecallback;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,10 @@ public class LifecycleCallbackDemo {
     public CommandLineRunner runStuff(PrintEntityRepository printEntityRepository) {
         return (args) -> {
             // put your logic here
-
+            PrintEntity printEntity= new PrintEntity();
+            printEntity.printMessage1();
+            printEntity.printMessage2();
+            printEntity.printMessage3();
         };
     }
 }

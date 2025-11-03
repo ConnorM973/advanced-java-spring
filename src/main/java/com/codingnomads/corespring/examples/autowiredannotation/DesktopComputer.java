@@ -12,4 +12,9 @@ public class DesktopComputer {
 
     @Autowired
     @Qualifier("radeon") private VideoCard videoCard;
+
+    @Autowired
+    @Qualifier("duracel") private Battery battery;
 }
+
+

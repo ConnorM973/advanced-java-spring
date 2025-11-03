@@ -3,6 +3,7 @@ package com.codingnomads.springdata.example.ddl.manytoone.unidirectional.usingma
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.ibatis.annotations.Many;
 
 @Entity
 @Getter
@@ -19,4 +20,8 @@ public class Post {
 
     @Column(nullable = false)
     private String content;
+
+    @ManyToOne(cascade=CascadeType.ALL,optional = false)
+    @JoinColumn(name="author_id_example")
+    private Author author;
 }

@@ -20,4 +20,6 @@ public class Car {
 
     @Column(name = "horsepower")
     private String horsepower;
+
+
 }

@@ -18,4 +18,9 @@ public class LaptopConfiguration {
     public OS os() {
         return new OS("ubuntu");
     }
+
+    @Bean
+    public GPU gpu() {
+        return new GPU("RTX 4090",16000);
+    }
 }

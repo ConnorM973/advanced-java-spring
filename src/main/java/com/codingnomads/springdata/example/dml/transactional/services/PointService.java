@@ -94,4 +94,18 @@ public class PointService {
         throw new InterruptedException();
         // changes still commit
     }
+
+    @Transactional(timeout = 3)
+    public void triggerTimeout2() throws InterruptedException {
+        Thread.sleep(950);
+        Point p = new Point(1, 1);
+        repo.save(p);
+        throw new InterruptedException();
+    }
+
+    @Transactional(timeout = 10)
+    public void timeOutAfter10() {
+        Point p = new Point(3, 3);
+        repo.save(p);
+    }
 }

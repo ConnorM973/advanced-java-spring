@@ -12,5 +12,8 @@ public class SpringBeansDemo {
         System.out.println(
                 "Spring Developer Address: " + springDeveloper.getAddress().getStreetNumber() + " "
                         + springDeveloper.getAddress().getStreet());
+        System.out.println(
+                "Spring Developer Name and Age: " + springDeveloper.getPerson().getName() +" Age " +springDeveloper.getPerson().getAge()
+        );
     }
 }

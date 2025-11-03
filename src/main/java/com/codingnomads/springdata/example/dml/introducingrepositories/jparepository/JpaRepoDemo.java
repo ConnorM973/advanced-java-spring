@@ -23,19 +23,23 @@ public class JpaRepoDemo implements CommandLineRunner {
         SoftDrink fanta = SoftDrink.builder().name("Fanta").rating(10).build();
         SoftDrink coke = SoftDrink.builder().name("Coca-Cola").rating(4).build();
         SoftDrink drPepper = SoftDrink.builder().name("Dr. Pepper").rating(1).build();
+        SoftDrink sprite = SoftDrink.builder().name("Sprite").rating(5).build();
+        SoftDrink vanillaCoke= SoftDrink.builder().name("Vanilla Coke").rating(8).build();
 
         // save single entity instance
         fanta = softDrinkRepo.save(fanta);
 
         // save multiple entity instances at a time
-        List<SoftDrink> insertedSoftDrinks = softDrinkRepo.saveAll(List.of(coke, drPepper));
+        List<SoftDrink> insertedSoftDrinks = softDrinkRepo.saveAll(List.of(coke, drPepper, sprite, vanillaCoke));
 
         // make sure all entities are actually saved to the database
         softDrinkRepo.flush();
 
         // update coke and drPepper to have rating 0 in the database
         for (SoftDrink sd : insertedSoftDrinks) {
+            if(sd.getName().equals("Dr. Pepper")){
             sd.setRating(0);
+            }
             softDrinkRepo.save(sd);
         }
 
@@ -54,7 +58,7 @@ public class JpaRepoDemo implements CommandLineRunner {
                 .forEach(System.out::println);
 
         // create page request to paginate through these 3 soft drinks. note that the first page is indicated using a 0
-        PageRequest pageRequest = PageRequest.of(0, 2);
+        PageRequest pageRequest = PageRequest.of(0, 4);
 
         System.out.println("FIRST PAGE");
         // get first page

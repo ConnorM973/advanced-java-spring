@@ -1,9 +1,7 @@
 /* CodingNomads (C)2024 */
 package com.codingnomads.springdata.example.dml.lifecyclecallback;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +17,17 @@ public class PrintEntity {
     private Long id;
 
     // write your methods here
+    @PrePersist
+    public void printMessage1(){
+        System.out.println("Printing Message 1");
+    }
+    @PreUpdate
+    public void printMessage2(){
+        System.out.println("Printing Message 2");
+    }
+    @PreRemove
+    public void printMessage3(){
+        System.out.println("Printing Message 3");
+    }
 
 }

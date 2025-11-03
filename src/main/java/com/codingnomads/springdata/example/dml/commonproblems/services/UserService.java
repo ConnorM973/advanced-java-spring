@@ -5,6 +5,7 @@ import com.codingnomads.springdata.example.dml.commonproblems.models.Address;
 import com.codingnomads.springdata.example.dml.commonproblems.models.ContactCard;
 import com.codingnomads.springdata.example.dml.commonproblems.models.User;
 import com.codingnomads.springdata.example.dml.commonproblems.repositories.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class UserService {
     @Autowired
     UserRepo userRepo;
 
+    @Transactional
     public void persistAFewUsers() {
 
         // set up an Address
@@ -67,7 +69,7 @@ public class UserService {
         // save new User
         userRepo.save(user);
     }
-
+    @Transactional
     public void querySomeData() {
 
         // find user by username

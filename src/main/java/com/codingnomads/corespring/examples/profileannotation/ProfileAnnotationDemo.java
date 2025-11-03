@@ -11,6 +11,7 @@ public class ProfileAnnotationDemo {
     public static void main(String[] args) {
         final ConfigurableApplicationContext ctx = SpringApplication.run(ProfileAnnotationDemo.class);
         final SpringDeveloper springDeveloper = ctx.getBean(SpringDeveloper.class);
+        final Example example= ctx.getBean(Example.class);
         ctx.close();
     }
 }

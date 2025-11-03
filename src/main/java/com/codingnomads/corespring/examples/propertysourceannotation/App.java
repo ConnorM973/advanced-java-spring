@@ -12,11 +12,25 @@ public class App {
     @Value("${app.version}")
     private String appVersion;
 
+    @Value("${appexample.name}")
+    private String appExampleName;
+
+    @Value("${appexample.version}")
+    private String appExampleVersion;
+
     public String getAppName() {
         return appName;
     }
 
     public String getAppVersion() {
         return appVersion;
+    }
+
+    public String getAppExampleName() {
+        return appExampleName;
+    }
+
+    public String getAppExampleVersion() {
+        return appExampleVersion;
     }
 }

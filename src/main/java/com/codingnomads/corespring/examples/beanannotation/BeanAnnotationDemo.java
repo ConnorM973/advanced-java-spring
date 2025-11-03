@@ -9,6 +9,7 @@ public class BeanAnnotationDemo {
         ctx.register(BeanAnnotationConfig.class);
         ctx.refresh();
         SampleBean sampleBean = ctx.getBean("friendly_bean_name", SampleBean.class);
+        SampleBean exampleBean = ctx.getBean("dean_the_bean",SampleBean.class);
         ctx.close();
     }
 }
