@@ -26,51 +26,49 @@ public class DeleteMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
-            Task newTask = Task.builder()
-                    .name("should be deleted")
-                    .description("used in a delete RestTemplate example. If you see this something went wrong. Oops")
-                    // be sure to enter a valid user id
-                    .userId(380)
-                    .completed(false)
+            Info newInfo = Info.builder()
+                    .email("connordeleteexample@example.com")
+                    .first_name("Connor")
+                    .last_name("McCaffrey")
                     .build();
 
             // POST new task to server
-            ResponseObject responseObject = restTemplate.postForObject(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks/", newTask, ResponseObject.class);
+            User user = restTemplate.postForObject(
+                    "http://demo.codingnomads.co:8080/tasks_api/users/", newInfo, User.class);
 
             // confirm data was returned & avoid NullPointerExceptions
-            if (responseObject == null) {
+            if (user == null) {
                 throw new Exception("The server did not return anything. Not even a ResponseObject!");
-            } else if (responseObject.getData() == null) {
+            } else if (user.getData() == null) {
                 throw new Exception("The server encountered this error while creating the task:"
-                        + responseObject.getError().getMessage());
+                        + user.getError().getMessage());
             } else {
-                newTask = responseObject.getData();
+                newInfo = user.getData();
             }
 
             System.out.println("The task was successfully created");
-            System.out.println(newTask);
+            System.out.println(newInfo);
 
             // delete the newTask using the ID the server returned
-            restTemplate.delete("http://demo.codingnomads.co:8080/tasks_api/tasks/" + newTask.getId());
+            restTemplate.delete("http://demo.codingnomads.co:8080/tasks_api/users/" + newInfo.getId());
             System.out.println("The task was also successfully deleted");
 
             // try to GET, verify record was deleted
             try {
                 restTemplate.getForEntity(
-                        "http://demo.codingnomads.co:8080/tasks_api/tasks/" + newTask.getId(), ResponseObject.class);
+                        "http://demo.codingnomads.co:8080/tasks_api/users/" + newInfo.getId(), User.class);
             } catch (HttpClientErrorException e) {
                 System.out.println(e.getMessage());
             }
 
             // delete using exchange()
-            HttpEntity<Task> httpEntity = new HttpEntity<>(newTask);
+            HttpEntity<Info> httpEntity = new HttpEntity<>(newInfo);
             try {
                 restTemplate.exchange(
-                        "http://demo.codingnomads.co:8080/tasks_api/tasks/" + newTask.getId(),
+                        "http://demo.codingnomads.co:8080/tasks_api/tasks/" + newInfo.getId(),
                         HttpMethod.DELETE,
                         httpEntity,
-                        ResponseObject.class);
+                        User.class);
             } catch (HttpClientErrorException e) {
                 System.out.println(e.getMessage());
             }

@@ -28,45 +28,45 @@ public class PutMain {
         return args -> {
 
             // use a valid task id
-            int taskId = 171;
+            int id = 16480;
+
 
             // request Task 5 from server
-            ResponseObject responseObject = restTemplate.getForObject(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks/" + taskId, ResponseObject.class);
+            User user = restTemplate.getForObject(
+                    "http://demo.codingnomads.co:8080/tasks_api/users/" + id, User.class);
 
             // confirm data was retrieved & avoid NullPointerExceptions
-            Task taskToUpdate;
-            if (responseObject == null) {
+            Info infoToUpdate;
+            if (user == null) {
                 throw new Exception("The server did not return anything. Not even a ResponseObject!");
-            } else if (responseObject.getData() == null) {
-                throw new Exception("The task with ID " + taskId + " could not be found");
+            } else if (user.getData() == null) {
+                throw new Exception("The task with ID " + id + " could not be found");
             } else {
-                taskToUpdate = responseObject.getData();
+                infoToUpdate = user.getData();
             }
 
             // update the task information
-            taskToUpdate.setName("updated using put() - video demo ");
-            taskToUpdate.setDescription("this task was updated using RestTemplate's put() method - video demo");
-            taskToUpdate.setCompleted(false);
+            infoToUpdate.setEmail("connorputexample@example.com");
+            infoToUpdate.setLast_name("PutExample");
 
             // use put to update the resource on the server
-            restTemplate.put("http://demo.codingnomads.co:8080/tasks_api/tasks/" + taskToUpdate.getId(), taskToUpdate);
+            restTemplate.put("http://demo.codingnomads.co:8080/tasks_api/users/" + infoToUpdate.getId(), infoToUpdate);
             // get the task to verify update
-            responseObject = restTemplate.getForObject(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks/" + taskId, ResponseObject.class);
-            System.out.println(responseObject.toString());
+            user = restTemplate.getForObject(
+                    "http://demo.codingnomads.co:8080/tasks_api/users/" + id, User.class);
+            System.out.println(user.toString());
 
-            taskToUpdate.setName("updated using exchange() PUT - video demo 2");
-            taskToUpdate.setDescription("this task was updated using RestTemplate's exchange() method - video demo 2");
+           infoToUpdate.setEmail("connorputexchangeexample@example.com");
+            //taskToUpdate.setDescription("this task was updated using RestTemplate's exchange() method - video demo 2");
 
             // create an HttpEntity wrapping the task to update
-            HttpEntity<Task> httpEntity = new HttpEntity<>(taskToUpdate);
+           HttpEntity<Info> httpEntity = new HttpEntity<>(infoToUpdate);
             // use exchange() to PUT the HttpEntity, and map the response to a ResponseEntity
-            ResponseEntity<ResponseObject> response = restTemplate.exchange(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks/" + taskToUpdate.getId(),
+           ResponseEntity<User> response = restTemplate.exchange(
+                   "http://demo.codingnomads.co:8080/tasks_api/users/" + infoToUpdate.getId(),
                     HttpMethod.PUT,
                     httpEntity,
-                    ResponseObject.class);
+                    User.class);
             System.out.println(response.toString());
         };
     }
