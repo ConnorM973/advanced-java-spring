@@ -26,22 +26,20 @@ public class PostForEntityMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
-            Task newTask = Task.builder()
-                    .name("learn how to use postForEntity()")
-                    .description("get comfortable using the RestTemplate postForEntity() method")
-                    // be sure to use valid user id
-                    .userId(380)
-                    .completed(false)
+            Info newInfo = Info.builder()
+                    .email("connor.postentityexample@example.com")
+                    .first_name("Connor")
+                    .last_name("PostEntity")
                     .build();
 
-            ResponseEntity<ResponseObject> responseEntity = restTemplate.postForEntity(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks", newTask, ResponseObject.class);
+            ResponseEntity<?> responseEntity = restTemplate.postForEntity(
+                    "http://demo.codingnomads.co:8080/tasks_api/users", newInfo, User.class);
 
             if (responseEntity.getStatusCode().equals(HttpStatus.CREATED)) {
                 System.out.println(Objects.requireNonNull(responseEntity.getBody()));
             } else {
                 System.out.println(
-                        Objects.requireNonNull(responseEntity.getBody()).getError());
+                        Objects.requireNonNull(responseEntity.getBody()));
             }
         };
     }

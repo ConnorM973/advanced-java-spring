@@ -23,16 +23,14 @@ public class PostForObjectMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
-            Task newTask = Task.builder()
-                    .name("learn how to use postForObject() - video demo")
-                    .description("get comfortable using the RestTemplate postForObject() method")
-                    // use a valid user id
-                    .userId(380)
-                    .completed(false)
+            Info newInfo = Info.builder()
+                    .email("connor.mccaffrey973@gmail.com")
+                    .first_name("Connor")
+                    .last_name("McCaffrey")
                     .build();
 
-            ResponseObject taskReturnedByServerAfterPost = restTemplate.postForObject(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks", newTask, ResponseObject.class);
+            User taskReturnedByServerAfterPost = restTemplate.postForObject(
+                    "http://demo.codingnomads.co:8080/tasks_api/users", newInfo, User.class);
 
             if (taskReturnedByServerAfterPost != null) {
                 System.out.println(taskReturnedByServerAfterPost.toString());

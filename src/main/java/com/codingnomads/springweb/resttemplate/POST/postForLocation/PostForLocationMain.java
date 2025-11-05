@@ -26,24 +26,22 @@ public class PostForLocationMain {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
-            Task newTask = Task.builder()
-                    .name("learn how to use postForLocation()")
-                    .description("get comfortable using the RestTemplate postForLocation() method")
-                    // be sure to use a valid user id
-                    .userId(380)
-                    .completed(false)
+            Info newInfo = Info.builder()
+                    .email("connor.postlocationexample3@example.com")
+                    .first_name("Connor")
+                    .last_name("PostLocation")
                     .build();
 
             // use postForLocation() to get the URL for the new resource
             URI returnedLocation = restTemplate.postForLocation(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks", newTask, ResponseObject.class);
+                    "http://demo.codingnomads.co:8080/tasks_api/users", newInfo, User.class);
 
             System.out.println(Objects.requireNonNull(returnedLocation));
 
-            ResponseEntity<?> responseEntity = restTemplate.postForEntity(
-                    "http://demo.codingnomads.co:8080/tasks_api/tasks", newTask, ResponseObject.class);
+            //ResponseEntity<?> responseEntity = restTemplate.postForEntity(
+                   // "http://demo.codingnomads.co:8080/tasks_api/users", newInfo, User.class);
 
-            System.out.println(responseEntity.getHeaders().get("Location"));
+            //System.out.println(responseEntity.getHeaders().get("Location"));
         };
     }
 }
