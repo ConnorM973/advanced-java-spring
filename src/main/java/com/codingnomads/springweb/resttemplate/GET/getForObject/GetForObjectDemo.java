@@ -23,11 +23,17 @@ public class GetForObjectDemo {
     @Bean
     public CommandLineRunner run() throws Exception {
         return args -> {
-            QuoteTemplate[] randomQuote;
-            randomQuote = restTemplate.getForObject("https://zenquotes.io/api/random/", QuoteTemplate[].class);
-            System.out.println(Arrays.toString(randomQuote));
+            //QuoteTemplate[] randomQuote;
+            //randomQuote = restTemplate.getForObject("https://zenquotes.io/api/random/", QuoteTemplate[].class);
+            //System.out.println(Arrays.toString(randomQuote));
 
             // submit more requests here
+            Excuse[] randomExcuse;
+            randomExcuse= restTemplate.getForObject("https://excuser-three.vercel.app/v1/excuse", Excuse[].class);
+            System.out.println(Arrays.toString(randomExcuse));
+
+
+
 
             //        CodingNomadsTasksApiResponse response =
             //                restTemplate.getForObject("http://demo.codingnomads.co:8080/tasks_api/users/5",

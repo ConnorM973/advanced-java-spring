@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.codingnomads.springdata.lab.repositories.RouteRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class SpringDataLab implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(SpringDataLab.class);
     }
-
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
 
