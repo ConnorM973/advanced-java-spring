@@ -37,10 +37,33 @@ public class TaskController {
         return Task.builder().name(taskName).build();
     }
 
+
+
+
     @GetMapping(value = "/request-parameter-with-multiple-values", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Task> getTasksWithNamesRequestParam(@RequestParam(name = "names") List<String> names) {
         return IntStream.range(0, names.size())
                 .mapToObj(i -> Task.builder().id((long) i).name(names.get(i)).build())
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/example-request-param-value", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Task getExampleTask(
+            @RequestParam(name = "completed", required = false, defaultValue = "false") boolean taskCompleted) {
+        return Task.builder().completed(taskCompleted).name("Example 1 task").build();
+    }
+
+    @GetMapping(value = "/request-parameter-with-multiple-id-values", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Task> getTasksWithIDsRequestParam(@RequestParam(name = "id") List<Long> names) {
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> Task.builder().id((long) i+1).name("Task "+i).build())
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/request-param-optional2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Task getTaskWithOptionalRequestPram2(@RequestParam(name = "id", required = false) Long taskId) {
+        if (taskId != null) {
+            return Task.builder().id(taskId).name("Example 3 Task- Parameter is Present").build();
+        } else return Task.builder().name("Example 3 Task- Parameter is not Present").build();
     }
 }

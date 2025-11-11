@@ -38,4 +38,12 @@ public class ResponseController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/practice")
+    public ResponseEntity<User> practiceUser(){
+        HttpHeaders httpHeaders= new HttpHeaders();
+        httpHeaders.add("Practice","Practice Header");
+        httpHeaders.add("Location","/users/"+user.getId());
+        httpHeaders.add("UserString",user.toString());
+        return new ResponseEntity<>(user,httpHeaders,HttpStatus.CREATED);
+    }
 }

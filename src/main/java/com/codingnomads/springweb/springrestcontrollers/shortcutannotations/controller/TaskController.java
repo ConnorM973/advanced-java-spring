@@ -3,10 +3,12 @@ package com.codingnomads.springweb.springrestcontrollers.shortcutannotations.con
 
 import com.codingnomads.springweb.springrestcontrollers.shortcutannotations.model.Task;
 import com.codingnomads.springweb.springrestcontrollers.shortcutannotations.repostiory.TaskRepository;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +23,7 @@ public class TaskController {
     @Autowired
     TaskRepository taskRepository;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> createNewTask(@RequestBody Task task) throws URISyntaxException {
 
         if (StringUtils.isEmpty(task.getName()) || task.getId() != null) {
@@ -57,5 +59,25 @@ public class TaskController {
         }
         taskRepository.deleteById(id);
         return ResponseEntity.ok().body(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updateTask) {
+        if (id == null || !taskRepository.existsById(id)) {
+            throw new IllegalStateException();
+        }
+        Optional<Task> oldTask = taskRepository.findById(id);
+        oldTask.ifPresent(task -> {
+            task.setName(updateTask.getName());
+            task.setCompleted(updateTask.getCompleted());
+            taskRepository.save(task);
+
+        });
+        try {
+            return ResponseEntity.created(new URI("/api/tasks/" + updateTask.getId()))
+                    .body(updateTask);
+        } catch (URISyntaxException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
