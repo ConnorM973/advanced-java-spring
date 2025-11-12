@@ -49,4 +49,39 @@ public class TaskController {
             return ResponseEntity.ok().body(message);
         }
     }
+
+    @PostMapping(value = "/api/example", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Task> createTask(@RequestBody(required = false) String name) throws URISyntaxException {
+        if (name == null) {
+            Task savedTask = taskRepository.save(Task.builder()
+                    .completed(false)
+                    .name("No Name Provided")
+                    .build());
+
+            return ResponseEntity.created(new URI("/api/example/" + savedTask.getId()))
+                    .body(savedTask);
+
+            //task.setCreatedAt(null);
+            //return ResponseEntity.badRequest().body(name);
+        } else {
+            Task savedTask = taskRepository.save(Task.builder()
+                    .completed(false)
+                    .name(name)
+                    .build());
+
+            return ResponseEntity.created(new URI("/api/example/" + savedTask.getId()))
+                    .body(savedTask);
+        }
+    }
+
+    @PostMapping(value = "/printtask")
+    public ResponseEntity<Task> printTask(@RequestBody(required = false) Task task) {
+
+        if (task.getId() == null) {
+
+            return ResponseEntity.badRequest().body(task);
+        } else {
+            return ResponseEntity.ok().body(task);
+        }
+    }
 }

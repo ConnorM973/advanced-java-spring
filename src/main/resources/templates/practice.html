@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf Application</title>
+</head>
+<body>
+<h1>Welcome to Spring Boot using Thymeleaf</h1>
+<h2>
+    <span>Hello, <th:block th:text="${name}">[name]</th:block></span>
+
+</h2>
+<h3>
+    <span>You are <th:block th:text="${age}">[age]</th:block></span>
+</h3>
+<h4>
+    <span>You are from the <th:block th:text="${country}">[country]</th:block></span>
+
+</h4>
+</body>
+</html>

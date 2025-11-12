@@ -86,7 +86,7 @@ public class HandleMultipartDataController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(databaseFile.getFileType()))
                 // display the file inline
-                // .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
                 // download file, without setting file name
                 // .header(HttpHeaders.CONTENT_DISPOSITION, "attachment")
                 // download file, and specify file name
@@ -148,5 +148,29 @@ public class HandleMultipartDataController {
         fileRepository.deleteById(fileId);
         return ResponseEntity.ok(
                 "File with ID " + fileId + " and name " + optional.get().getFileName() + " was deleted");
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<?> searchFilesByName(@PathVariable(name = "name") String fileName) {
+
+        final Optional<DatabaseFile> optional = fileRepository.findAllByFileNameContaining(fileName);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found with name: " + fileName);
+        }
+
+        DatabaseFile databaseFile = optional.get();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(databaseFile.getFileType()))
+                // display the file inline
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+                // download file, without setting file name
+                // .header(HttpHeaders.CONTENT_DISPOSITION, "attachment")
+                // download file, and specify file name
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        String.format("attachment; filename=\"%s\"", databaseFile.getFileName()))
+                .body(new ByteArrayResource(databaseFile.getData()));
     }
 }

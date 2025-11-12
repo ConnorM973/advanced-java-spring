@@ -49,4 +49,31 @@ public class TaskController {
     public String pathVariableIsNotEncoded(@PathVariable String name) {
         return name;
     }
+
+    @GetMapping(value = {"/example1", "/example1/{id}"})
+    public String examplePathVariableOptional(@PathVariable(required = false) Long id) {
+        if (id != null) {
+            return "Path Variable ID Value:" + id;
+        } else {
+            return "Path Variable ID : Not Provided";
+        }
+    }
+    @GetMapping(value = "/example-map/{id}/{completed}")
+    public Task getExampleTask(@PathVariable Map<String, String> pathVariableMaps) {
+        return Task.builder()
+                .id(Long.valueOf(pathVariableMaps.get("id")))
+                .name("Example- Default Name")
+                .completed(Boolean.parseBoolean(pathVariableMaps.get("completed")))
+                .build();
+    }
+
+    @GetMapping(value = {"/example-path-variable-optional", "/example-path-variable-optional/{completed}"})
+    public String pathVariableOptional(@PathVariable(required = false) Boolean completed) {
+        if (completed != null) {
+            return "Completed was provided: " + completed;
+        } else {
+            return "Completed was not provided.";
+        }
+    }
+
 }
