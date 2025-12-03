@@ -150,13 +150,13 @@ public class HandleMultipartDataController {
                 "File with ID " + fileId + " and name " + optional.get().getFileName() + " was deleted");
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/test/{name}")
     public ResponseEntity<?> searchFilesByName(@PathVariable(name = "name") String fileName) {
 
         final Optional<DatabaseFile> optional = fileRepository.findAllByFileNameContaining(fileName);
 
         if (optional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found with name: " + fileName);
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("File not found with name: " + fileName);
         }
 
         DatabaseFile databaseFile = optional.get();

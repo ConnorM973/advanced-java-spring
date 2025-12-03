@@ -21,7 +21,9 @@ public class DatabaseFile {
     private String fileType;
 
     @Lob
+    @Column(length=65535)
     private byte[] data;
+
 
     @Transient
     private String downloadUrl;
