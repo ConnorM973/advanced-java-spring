@@ -56,8 +56,7 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
     testImplementation 'org.springframework.security:spring-security-test'
-    // https://mvnrepository.com/artifact/junit/junit
-    testImplementation("junit:junit:4.13.2")
+
 }
 
 idea {

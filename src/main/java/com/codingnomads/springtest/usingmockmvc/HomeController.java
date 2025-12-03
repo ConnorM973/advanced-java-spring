@@ -3,9 +3,7 @@ package com.codingnomads.springtest.usingmockmvc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/")
 @Controller
@@ -22,4 +20,32 @@ public class HomeController {
     public String greet() {
         return "Hello Back";
     }
+
+
+    @PostMapping("/hello2")
+    @ResponseBody
+    public String greet2() {
+    return "Hola";
 }
+
+    @GetMapping("/hello3")
+    @ResponseBody
+    public String greet3() {
+        return "Bonjour";
+    }
+
+    @GetMapping("/hello/{name}")
+    public String nameGreet(@PathVariable("name") String name, Model model)
+    {
+        model.addAttribute("name",name);
+        return "greeting";
+    }
+
+    @GetMapping("/empty")
+    @ResponseBody
+    public String emptyString() {
+        return "";
+    }
+
+}
+

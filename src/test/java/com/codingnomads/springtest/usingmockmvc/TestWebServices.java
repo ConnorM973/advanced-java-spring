@@ -2,7 +2,9 @@
 package com.codingnomads.springtest.usingmockmvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.emptyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,5 +50,36 @@ public class TestWebServices {
                 .andDo(print())
                 // the view name expected is greeting
                 .andExpect(view().name("greeting"));
+    }
+
+    @Test
+    public void emptyGreetingShouldReturnEmptyString() throws Exception {
+
+        mockMvc
+
+                .perform(
+                        get("/empty"))
+
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(emptyString()));
+    }
+
+    @Test
+    public void customNameURLShouldReturnGreetingViewName() throws Exception {
+        // use mockMvc to start a request
+        mockMvc
+                .perform(get("/hello/test"))
+                .andDo(print())
+                .andExpect(view().name("greeting"));
+    }
+
+    @Test
+    public void hello2PostShouldReturnNoHeader() throws Exception {
+        // use mockMvc to start a request
+        mockMvc
+                .perform(post("/hello2"))
+                .andExpect(status().isOk())
+                .andExpect(header().doesNotExist("Header"));
     }
 }
