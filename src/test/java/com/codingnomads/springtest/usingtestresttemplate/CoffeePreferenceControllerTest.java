@@ -5,10 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.codingnomads.springtest.usingtestresttemplate.models.CoffeePreference;
 import java.util.Objects;
+
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(classes = UsingTestRestTemplateMain.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -18,6 +21,7 @@ public class CoffeePreferenceControllerTest {
     TestRestTemplate testRestTemplate;
 
     @Test
+    @Order(1)
     public void testPostCoffeePreference() throws Exception {
 
         // build new CoffeePreference to post
@@ -42,5 +46,14 @@ public class CoffeePreferenceControllerTest {
         // confirm ID was assigned
         assertThat(Objects.requireNonNull(postedCoffeePreference.getBody()).getId())
                 .isNotNull();
+    }
+
+    @Test
+    @Order(2)
+    public void testGetCoffeePreferences() throws Exception{
+        ResponseEntity<CoffeePreference[]> getCoffeePreference=
+                testRestTemplate.getForEntity("/coffee",CoffeePreference[].class);
+        assertThat(getCoffeePreference.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getCoffeePreference.getBody()).isNotNull();
     }
 }
